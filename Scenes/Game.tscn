@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/ArrowButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Frames/arrow_left_frames.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://Frames/arrow_right_frames.tres" type="SpriteFrames" id=3]
+[ext_resource path="res://Sprites/game/road/road.png" type="Texture" id=4]
+[ext_resource path="res://Sounds/song.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Scripts/Game.gd" type="Script" id=6]
+[ext_resource path="res://Fonts/heartbit2x.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Scenes/Conductor.tscn" type="PackedScene" id=8]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="road" type="Sprite" parent="."]
+position = Vector2( 100, 0 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="ArrowUp" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 164 )
+input = "up"
+
+[node name="ArrowLeft" parent="." instance=ExtResource( 1 )]
+position = Vector2( 120, 164 )
+frames = ExtResource( 2 )
+input = "left"
+
+[node name="ArrowButton" parent="." instance=ExtResource( 1 )]
+position = Vector2( 200, 164 )
+frames = ExtResource( 3 )
+input = "right"
+
+[node name="Label" type="Label" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 44.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.964706, 0.839216, 0.741176, 1 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Combo" type="Label" parent="."]
+margin_left = 4.0
+margin_top = 20.0
+margin_right = 96.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color = Color( 0.964706, 0.839216, 0.741176, 1 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Conductor" parent="." instance=ExtResource( 8 )]
+stream = ExtResource( 5 )
+volume_db = -15.0
+bpm = 115
+[connection signal="beat" from="Conductor" to="." method="_on_Conductor_beat"]
+[connection signal="measure" from="Conductor" to="." method="_on_Conductor_measure"]
